@@ -1,5 +1,10 @@
-import styled from 'styled-components';
-import { darken, lighten } from 'polished';
+import styled, { keyframes } from 'styled-components';
+import { darken } from 'polished';
+
+const rotate = keyframes`
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+`;
 
 export const Wrapper = styled.div`
   height: 100%;
@@ -16,7 +21,8 @@ export const Content = styled.div`
 
   text-align: center;
 
-  form {
+  form,
+  div {
     display: flex;
     flex-direction: column;
     margin-top: 45px;
@@ -58,7 +64,7 @@ export const Content = styled.div`
     }
 
     button {
-      margin-top: 5px;
+      margin: 5px 0 10px;
       height: 50px;
       border: 0;
       border-radius: 4px;
@@ -70,10 +76,14 @@ export const Content = styled.div`
       &:hover {
         background: ${darken(0.1, '#e5556e')};
       }
+
+      svg {
+        animation: ${rotate} 2s linear infinite;
+      }
     }
 
     a {
-      margin-top: 20px;
+      margin-top: 10px;
       font-size: 16px;
       color: #fff;
       opacity: 0.6;
@@ -82,6 +92,21 @@ export const Content = styled.div`
       &:hover {
         opacity: 1;
       }
+    }
+
+    p {
+      background: rgba(0, 0, 0, 0.2);
+      border: 0;
+      border-radius: 4px;
+      height: 100px;
+      color: #fff;
+      margin: 0px 0 10px;
+      font-size: 18px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
   }
 `;

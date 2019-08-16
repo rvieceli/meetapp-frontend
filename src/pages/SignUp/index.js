@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
+import { FaSpinner } from 'react-icons/fa';
+
+import api from '../../services/api';
+import history from '../../services/history';
 
 import logo from '../../assets/logo.svg';
 
@@ -20,7 +24,25 @@ const schema = Yup.object().shape({
 });
 
 export default function SignUp() {
-  function handleSubmit(data) {}
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  async function handleSubmit({ name, email, password, confirmPassword }) {
+    setLoading(true);
+    try {
+      await api.post('users', {
+        name,
+        email,
+        password,
+        confirmPassword,
+      });
+
+      history.push('/');
+    } catch (err) {
+      setError(err.response.data.error);
+      setLoading(false);
+    }
+  }
 
   return (
     <>
@@ -39,7 +61,11 @@ export default function SignUp() {
           name="confirmPassword"
           placeholder="Confirme a senha secreta"
         />
-        <button type="submit">Criar conta</button>
+        <button type="submit">
+          {loading ? <FaSpinner size={20} color="#fff" /> : 'Criar conta'}
+        </button>
+
+        {error && <span>{error}</span>}
 
         <Link to="/">Já tenho uma conta</Link>
       </Form>

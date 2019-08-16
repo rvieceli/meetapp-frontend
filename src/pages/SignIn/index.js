@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Form, Input } from '@rocketseat/unform';
-
 import * as Yup from 'yup';
+import { Form, Input } from '@rocketseat/unform';
+import { FaSpinner } from 'react-icons/fa';
+
+import api from '../../services/api';
+import history from '../../services/history';
+
+import { signInSuccess } from '../../store/modules/auth/actions';
 
 import logo from '../../assets/logo.svg';
 
@@ -16,7 +22,29 @@ const schema = Yup.object().shape({
 });
 
 export default function SignIn() {
-  function handleSubmit(data) {}
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  async function handleSubmit({ email, password }) {
+    setLoading(true);
+    try {
+      const response = await api.post('sessions', {
+        email,
+        password,
+      });
+
+      const { token, user } = response.data;
+
+      dispatch(signInSuccess(token, user));
+
+      setLoading(false);
+      history.push('/dashboard');
+    } catch (err) {
+      setError(err.response.data.error);
+      setLoading(false);
+    }
+  }
 
   return (
     <>
@@ -29,8 +57,13 @@ export default function SignIn() {
           name="password"
           placeholder="Sua senha secreta"
         />
-        <button type="submit">Entrar</button>
 
+        <button type="submit">
+          {loading ? <FaSpinner size={20} color="#fff" /> : 'Entrar'}
+        </button>
+        {error && <span>{error}</span>}
+
+        <Link to="/password/forgot">Esqueci a minha senha</Link>
         <Link to="/register">Criar uma conta grátis</Link>
       </Form>
     </>
