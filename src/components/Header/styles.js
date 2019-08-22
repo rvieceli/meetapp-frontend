@@ -53,7 +53,7 @@ export const Profile = styled.div`
     font-size: 16px;
 
     &:hover {
-      background: ${darken(0.1, '#e5556e')};
+      background: ${darken(0.1, '#d44059')};
     }
   }
 `;
