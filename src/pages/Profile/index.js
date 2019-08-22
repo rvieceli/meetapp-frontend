@@ -1,7 +1,16 @@
 import React from 'react';
 
-// import { Container } from './styles';
+import ProfileForm from './ProfileForm';
+import PasswordForm from './PasswordForm';
+
+import { Container } from './styles';
 
 export default function Profile() {
-  return <p>Profile</p>;
+  return (
+    <Container>
+      <ProfileForm />
+      <hr />
+      <PasswordForm />
+    </Container>
+  );
 }
