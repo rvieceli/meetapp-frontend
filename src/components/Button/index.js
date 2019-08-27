@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 import { Loading } from './styles';
 
-export function Button({ isLoading, children, Icon }) {
+export function Button({ isLoading, children, Icon, ...rest }) {
   return (
-    <button type="button">
+    <button type="button" {...rest}>
       <Content Icon={Icon} isLoading={isLoading}>
         {children}
       </Content>
@@ -14,9 +14,9 @@ export function Button({ isLoading, children, Icon }) {
   );
 }
 
-export function Submit({ isLoading, children, Icon }) {
+export function Submit({ isLoading, children, Icon, ...rest }) {
   return (
-    <button type="submit">
+    <button type="submit" {...rest}>
       <Content Icon={Icon} isLoading={isLoading}>
         {children}
       </Content>
