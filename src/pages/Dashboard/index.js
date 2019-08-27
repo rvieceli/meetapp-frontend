@@ -44,7 +44,7 @@ export default function Dashboard() {
           <strong>{meetup.description}</strong>
           <div>
             <span>{meetup.dateFormatted}</span>
-            <Link to="/detail">
+            <Link to={`/detail/${meetup.id}`}>
               <FaChevronRight />
             </Link>
           </div>
